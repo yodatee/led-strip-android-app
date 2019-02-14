@@ -42,7 +42,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            val manager = fragmentManager
+            if(manager.backStackEntryCount != 0){
+                manager.popBackStack()
+            }
+            else {
+                super.onBackPressed()
+            }
         }
     }
 
@@ -60,7 +66,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.action_settings -> {
                 val manager = fragmentManager
                 val settings = SettingsFragment()
-                manager.beginTransaction().replace(R.id.fragment, settings).commit()
+                manager.beginTransaction().replace(R.id.fragment, settings).addToBackStack(null).commit()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
