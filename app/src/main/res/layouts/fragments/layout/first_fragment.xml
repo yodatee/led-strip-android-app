@@ -4,60 +4,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorDarkBackground"
-    android:padding="15dp">
+    android:padding="4dp"
+    android:background="@color/colorSecondaryDark">
 
-    <com.flask.colorpicker.ColorPickerView
-        android:id="@+id/color_picker"
-        android:layout_width="match_parent"
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:alphaSlider="false"
-        app:density="12"
-        app:lightnessSlider="true"
-        app:wheelType="CIRCLE"
+        app:cardBackgroundColor="@color/colorSecondary"
+        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="4dp">
 
-
-        />
-
-    <com.flask.colorpicker.slider.LightnessSlider
-        android:id="@+id/lightness_slider"
-        android:layout_width="match_parent"
-        android:layout_height="48dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom|right"
-        android:orientation="horizontal">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/set_color_button"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:srcCompat="@android:drawable/checkbox_on_background" />
+            android:orientation="vertical">
 
-    </LinearLayout>
-    <!--
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom|right"
-            android:orientation="horizontal">
+            <com.flask.colorpicker.ColorPickerView
+                android:id="@+id/color_picker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:alphaSlider="false"
+                app:density="12"
+                app:lightnessSlider="true"
+                app:wheelType="CIRCLE"
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
+                />
+
+            <com.flask.colorpicker.slider.LightnessSlider
+                android:id="@+id/lightness_slider"
+                android:layout_width="match_parent"
+                android:layout_height="96dp" />
+
         </LinearLayout>
-    -->
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/turn_on_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/mecKonStyle_button"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/colorText"
+                android:text="turn on"
+                />
+
+        </RelativeLayout>
+
+
 
 </LinearLayout>

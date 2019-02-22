@@ -3,10 +3,10 @@ package mec_kon.ledstripapp.first_fragment
 import android.app.Fragment
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.slider.LightnessSlider
 import mec_kon.ledstripapp.R
@@ -15,6 +15,8 @@ import mec_kon.ledstripapp.storage.Storage
 
 
 class FirstFragment : Fragment() {
+    var isOn = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.first_fragment, container, false)
 
@@ -39,10 +41,20 @@ class FirstFragment : Fragment() {
             network.postJsonString(jsonString, settings.address, settings.port)
         }
 
-        val setColorButton = view.findViewById<FloatingActionButton>(R.id.set_color_button)
-        setColorButton.setOnClickListener {
 
-            val jsonString = network.createJsonString(0, 0, 0)
+        val turnOnOffButton = view.findViewById<Button>(R.id.turn_on_off)
+        turnOnOffButton.setOnClickListener {
+            val jsonString:String
+            if(!isOn){
+                jsonString = network.createJsonString(255, 255, 255)
+                isOn = true
+                turnOnOffButton.text = "turn off"
+            }
+            else {
+                jsonString = network.createJsonString(0, 0, 0)
+                isOn = false
+                turnOnOffButton.text = "turn on"
+            }
             network.postJsonString(jsonString, settings.address, settings.port)
         }
 
