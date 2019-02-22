@@ -31,6 +31,8 @@ class FirstFragment : Fragment() {
         colorPicker.setLightnessSlider(lightnessSlider)
         colorPicker.setInitialColor(0xFFFFFFFF.toInt(), true)
 
+        val turnOnOffButton = view.findViewById<Button>(R.id.turn_on_off)
+
         colorPicker.addOnColorChangedListener {
             val color = colorPicker.selectedColor
             val red = Color.red(color)
@@ -39,10 +41,12 @@ class FirstFragment : Fragment() {
 
             val jsonString = network.createJsonString(red, green, blue)
             network.postJsonString(jsonString, settings.address, settings.port)
+
+            isOn = true
+            turnOnOffButton.text = "turn off"
         }
 
 
-        val turnOnOffButton = view.findViewById<Button>(R.id.turn_on_off)
         turnOnOffButton.setOnClickListener {
             val jsonString:String
             if(!isOn){
