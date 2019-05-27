@@ -38,7 +38,6 @@ class FirstFragment : Fragment() {
             val red = Color.red(color)
             val green = Color.green(color)
             val blue = Color.blue(color)
-
             val jsonString = network.createJsonString(red, green, blue)
             network.postJsonString(jsonString, settings.address, settings.port)
 

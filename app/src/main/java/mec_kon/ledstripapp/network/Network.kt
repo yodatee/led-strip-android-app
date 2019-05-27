@@ -1,13 +1,12 @@
 package mec_kon.ledstripapp.network
 
-import android.util.Log
-import com.loopj.android.http.*
-import cz.msebera.android.httpclient.Header
-import cz.msebera.android.httpclient.entity.StringEntity
+import android.os.AsyncTask
+import io.github.rybalkinsd.kohttp.dsl.httpPost
+import okhttp3.Response
+import java.lang.Exception
 
 class Network {
 
-    val asyncHttpClient = AsyncHttpClient()
 
     fun createJsonString(colorRed: Int, colorGreen: Int, colorBlue: Int) :String {
         return "{\"color_array\":[{\"color_red\":$colorRed,\"color_green\":$colorGreen,\"color_blue\":$colorBlue}],\"time\":0,\"mode\":\"oneColor\",\"number_of_colors\":1}"
@@ -15,19 +14,33 @@ class Network {
 
     fun postJsonString(jsonString: String, address: String, port: Int){
 
-        val entity = StringEntity(jsonString)
-        val responseHandler = ResponseHandler()
-
-        asyncHttpClient.post(null, "http://$address:$port/colors.json", entity, "application/json", responseHandler)
+        doHttpPost().execute(address, port, jsonString)
     }
 
-    inner class ResponseHandler : AsyncHttpResponseHandler() {
-        override fun onFailure(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?, error: Throwable?) {
-            Log.e("Network", "Sending failed, response =  " + String(responseBody ?: "no response".toByteArray()))
+    private inner class doHttpPost: AsyncTask<Any, Void, String>(){
+
+        override fun doInBackground(vararg params: Any): String {
+            try {
+                val response: Response = httpPost {
+                    host = params[0] as String
+                    port = params[1] as Int
+
+                    path = "/colors.json"
+
+                    body {
+                        json(params[2] as String)
+                    }
+                }
+                return response.message()
+            }
+            catch (e: Exception){
+                return "http error !"
+            }
+
         }
 
-        override fun onSuccess(statusCode: Int, headers: Array<out Header>?, responseBody: ByteArray?) {
-            Log.i("Network", "Success, response = " +  String(responseBody ?: "no response".toByteArray()))
+        override fun onPostExecute(result: String) {
+            println(result)
         }
     }
 
